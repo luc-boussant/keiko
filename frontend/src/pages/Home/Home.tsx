@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import Pokemon from 'components/Pokemon';
 import Style from './Home.style';
@@ -32,15 +33,10 @@ class Home extends React.Component<Props, State> {
 
     return (
       <Style.Intro>
-        <div>Bienvenue sur ton futur pokédex !</div>
-        <div>
-          Tu vas pouvoir apprendre tout ce qu'il faut sur React, Redux et Symfony, et attraper des
-          pokemons !
-        </div>
-        <div>Commence par créer ton premier pokemon:</div>
+        <FormattedMessage id="home.welcome-message" />
         {pokemons && pokemons.map(pokemon => (
-            <Pokemon name={pokemon.name} id={pokemon.id} key={pokemon.id} />
-          ))}
+          <Pokemon name={pokemon.name} id={pokemon.id} key={pokemon.id} />
+        ))}
       </Style.Intro>
     );
   }
