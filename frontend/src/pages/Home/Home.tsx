@@ -1,12 +1,11 @@
 import * as React from 'react';
 
+import Pokemon from 'components/Pokemon';
 import Style from './Home.style';
 
 class Home extends React.Component {
   render(): React.ReactNode {
-    const pokemon = 'Carapuce';
-    const carapuceId = 7;
-    const imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + carapuceId + ".png";
+    const pokemons = {7: 'Carapuce', 8: 'Carabaffe', 9: 'Tortank'};
 
     return (
       <Style.Intro>
@@ -16,8 +15,9 @@ class Home extends React.Component {
           pokemons !
         </div>
         <div>Commence par créer ton premier pokemon:</div>
-        <div><img src={imageUrl} /></div>
-        <div>{carapuceId}: {pokemon}</div>
+        <Pokemon name={pokemons[7]} id={7} />
+        <Pokemon name={pokemons[8]} id={8} />
+        <Pokemon name={pokemons[9]} id={9} />
       </Style.Intro>
     );
   }
