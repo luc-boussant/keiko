@@ -1,24 +1,30 @@
 import React, { PureComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import Style from './Pokemon.style';
+import { Body, Card, Image, Title } from './Pokemon.style';
 
 interface IProps {
   name: string,
   id: number,
+  weight: number,
+  height: number,
 };
 
 class Pokemon extends PureComponent<IProps> {
   render(): React.ReactNode {
-    const { name, id } = this.props;
+    const { name, id, weight, height } = this.props;
     const imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + id + ".png";
 
     return (
-      <Style.Intro>
-        <div><img src={imageUrl} /></div>
+      <Card>
+        <Title>{name}</Title>
+        <Image src={imageUrl} />
+        <Body>
         <FormattedMessage id="pokemon.id" values={{ id }} />
-        <FormattedMessage id="pokemon.name" values={{ name }} />
-      </Style.Intro>
+        <FormattedMessage id="pokemon.weight" values={{ weight }} />
+        <FormattedMessage id="pokemon.height" values={{ height }} />
+        </Body>
+      </Card>
     );
   }
 }
