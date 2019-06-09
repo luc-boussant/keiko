@@ -8,7 +8,7 @@
     "generate-module": "To add business logic, add a file in ./redux with your reducers/actions/sagas/selectors/constants/...",
     "click-me": "Click me",
     "readme": "Look at the README.md to discover the awesome npm commands we added",
-    "welcome-message": "Bienvenue sur ton futur pokédex !"
+    "welcome-message": "Pokedex"
   },
   "page": {
     "back": "Back",
@@ -16,7 +16,8 @@
     "add-github-username": "Enter a github username"
   },
   "pokemon": {
-    "id": "Identifiant: {id}",
-    "name": "Nom du pokémon: {name}"
+    "id": "Id: {id}",
+    "weight": "Weight: {weight} kg",
+    "height": "Height: {height} cm"
   }
 }
