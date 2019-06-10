@@ -18,37 +18,45 @@ interface Props { }
 interface State {
   pokemons: PokemonInterface[];
   loading: boolean;
+  apiError: boolean;
 }
 
 class Home extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { pokemons: [], loading: true };
+    this.state = { pokemons: [], loading: true, apiError: false };
   }
 
   async componentDidMount() {
-    const pokemonDict = await makeGetRequest('/pokemon');
-    const pokemons = JSON.parse(pokemonDict.text);
-    this.setState({ pokemons, loading: false });
+    try {
+      const pokemonDict = await makeGetRequest('/pokemon');
+      const pokemons = JSON.parse(pokemonDict.text);
+      this.setState({ pokemons, loading: false });
+    } catch (error) {
+      this.setState({ apiError: true });
+    }
   }
 
   render(): React.ReactNode {
-    const { pokemons, loading } = this.state;
+    const { pokemons, loading, apiError } = this.state;
 
     return (
       <React.Fragment>
         <Title>
           <FormattedMessage id="home.welcome-message" />
         </Title>
-        {loading ?
-          (<StyledLoader>
-            <Loader />
-          </StyledLoader>) :
-          (<StyledList>
-            {pokemons.map(pokemon => (
-              <Pokemon name={pokemon.name} id={pokemon.id} weight={pokemon.weight} height={pokemon.height} key={pokemon.id} />
-            ))}
-          </StyledList>)}
+        {apiError ? (<FormattedMessage id="home.api-error-message" />) :
+          (<React.Fragment>{
+            loading ?
+              (<StyledLoader>
+                <Loader />
+              </StyledLoader>) :
+              (<StyledList>
+                {pokemons.map(pokemon => (
+                  <Pokemon name={pokemon.name} id={pokemon.id} weight={pokemon.weight} height={pokemon.height} key={pokemon.id} />
+                ))}
+              </StyledList>)}</React.Fragment>)
+          }
       </React.Fragment>
     );
   }
