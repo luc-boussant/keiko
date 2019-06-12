@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Pokemon from 'components/Pokemon';
 import { FormattedMessage } from 'react-intl';
@@ -14,52 +14,58 @@ interface PokemonInterface {
   height: number;
 }
 
-interface Props { }
-interface State {
-  pokemons: PokemonInterface[];
-  loading: boolean;
-  apiError: boolean;
-}
+// tslint:disable-next-line:no-empty-interface
+interface Props {}
 
-class Home extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { pokemons: [], loading: true, apiError: false };
-  }
+const Home: React.FunctionComponent<Props> = props => {
+  const [pokemons, setPokemons] = useState([] as PokemonInterface[]);
+  const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(false);
 
-  async componentDidMount() {
-    try {
-      const pokemonDict = await makeGetRequest('/pokemon');
-      const pokemons = JSON.parse(pokemonDict.text);
-      this.setState({ pokemons, loading: false });
-    } catch (error) {
-      this.setState({ apiError: true });
-    }
-  }
+  useEffect(() => {
+    const getPokemonList = async () => {
+      try {
+        const pokemonDict = await makeGetRequest('/pokemon');
+        const pokemonList = JSON.parse(pokemonDict.text);
+        setPokemons(pokemonList);
+        setLoading(false);
+      } catch (error) {
+        setApiError(true);
+      }
+    };
+    getPokemonList();
+  });
 
-  render(): React.ReactNode {
-    const { pokemons, loading, apiError } = this.state;
-
-    return (
-      <React.Fragment>
-        <Title>
-          <FormattedMessage id="home.welcome-message" />
-        </Title>
-        {apiError ? (<FormattedMessage id="home.api-error-message" />) :
-          (<React.Fragment>{
-            loading ?
-              (<StyledLoader>
-                <Loader />
-              </StyledLoader>) :
-              (<StyledList>
-                {pokemons.map(pokemon => (
-                  <Pokemon name={pokemon.name} id={pokemon.id} weight={pokemon.weight} height={pokemon.height} key={pokemon.id} />
-                ))}
-              </StyledList>)}</React.Fragment>)
-          }
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <Title>
+        <FormattedMessage id="home.welcome-message" />
+      </Title>
+      {apiError ? (
+        <FormattedMessage id="home.api-error-message" />
+      ) : (
+        <React.Fragment>
+          {loading ? (
+            <StyledLoader>
+              <Loader />
+            </StyledLoader>
+          ) : (
+            <StyledList>
+              {pokemons.map(pokemon => (
+                <Pokemon
+                  name={pokemon.name}
+                  id={pokemon.id}
+                  weight={pokemon.weight}
+                  height={pokemon.height}
+                  key={pokemon.id}
+                />
+              ))}
+            </StyledList>
+          )}
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  );
+};
 
 export default Home;
