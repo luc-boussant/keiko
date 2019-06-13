@@ -28,8 +28,8 @@ const Pokemon: React.FunctionComponent<Props> = props => {
       <Image src={showFrontImage ? getFrontImageUrl(props.id) : getBackImageUrl(props.id)} />
       <Body>
         <FormattedMessage id="pokemon.id" values={{ id: props.id }} />
-        <FormattedMessage id="pokemon.weight" values={{ weight: props.weight }} />
-        <FormattedMessage id="pokemon.height" values={{ height: props.height }} />
+        <FormattedMessage id="pokemon.weight" values={{ weight: props.weight / 10 }} />
+        <FormattedMessage id="pokemon.height" values={{ height: props.height * 10 }} />
       </Body>
     </Card>
   );
