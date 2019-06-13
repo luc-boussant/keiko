@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import Pokemon from 'components/Pokemon';
 import { FormattedMessage } from 'react-intl';
 import { ReactComponent as Loader } from '../../assets/loader.svg';
-import { StyledList, StyledLoader, Title } from './Home.style';
+import { Navigation, StyledLink, StyledList, StyledLoader, Title } from './Home.style';
 
+import { RouteComponentProps } from 'react-router';
 import { makeGetRequest } from 'services/networking/request';
 
 interface PokemonInterface {
@@ -14,18 +15,20 @@ interface PokemonInterface {
   height: number;
 }
 
-// tslint:disable-next-line:no-empty-interface
-interface Props {}
+interface Props {
+  id: string;
+}
 
-const Home: React.FunctionComponent<Props> = props => {
+const Home: React.FunctionComponent<RouteComponentProps<Props>> = props => {
   const [pokemons, setPokemons] = useState([] as PokemonInterface[]);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(false);
+  const { id } = props.match.params;
 
   useEffect(() => {
     const getPokemonList = async () => {
       try {
-        const pokemonDict = await makeGetRequest('/pokemon');
+        const pokemonDict = await makeGetRequest('/pokemon', { page: id });
         const pokemonList = JSON.parse(pokemonDict.text);
         setPokemons(pokemonList);
         setLoading(false);
@@ -34,7 +37,13 @@ const Home: React.FunctionComponent<Props> = props => {
       }
     };
     getPokemonList();
-  });
+
+    return function cleanup() {
+      setPokemons([]);
+      setLoading(true);
+      setApiError(false);
+    };
+  }, [id]);
 
   return (
     <React.Fragment>
@@ -50,17 +59,28 @@ const Home: React.FunctionComponent<Props> = props => {
               <Loader />
             </StyledLoader>
           ) : (
-            <StyledList>
-              {pokemons.map(pokemon => (
-                <Pokemon
-                  name={pokemon.name}
-                  id={pokemon.id}
-                  weight={pokemon.weight}
-                  height={pokemon.height}
-                  key={pokemon.id}
-                />
-              ))}
-            </StyledList>
+            <React.Fragment>
+              <Navigation>
+                <StyledLink to={(parseInt(id, 10) - 1).toString()}>
+                  {parseInt(id, 10) > 1 && '<'}
+                </StyledLink>
+
+                <StyledLink to={(parseInt(id, 10) + 1).toString()}>
+                  {parseInt(id, 10) < 6 && '>'}
+                </StyledLink>
+              </Navigation>
+              <StyledList>
+                {pokemons.map(pokemon => (
+                  <Pokemon
+                    name={pokemon.name}
+                    id={pokemon.id}
+                    weight={pokemon.weight}
+                    height={pokemon.height}
+                    key={pokemon.id}
+                  />
+                ))}
+              </StyledList>
+            </React.Fragment>
           )}
         </React.Fragment>
       )}
