@@ -30,16 +30,3 @@ export const ImageList = styled.div`
 export const Image = styled.img`
   height: 100px;
 `;
-
-export const StyledButton = styled.div`
-  position: absolute;
-  margin-top: 5px;
-  margin-left: 215px;
-`;
-
-export const StyledLoader = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px;
-`;
