@@ -5,20 +5,14 @@ import { Navigation, StyledLink, StyledList, Title } from './Home.style';
 
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
-
-interface PokemonInterface {
-  id: number;
-  name: string;
-  weight: number;
-  height: number;
-}
+import { PokemonType } from 'redux/Pokemon';
 
 interface RouteParams {
   id: string;
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
-  pokemons: PokemonInterface[];
+  pokemons: PokemonType[];
 }
 
 const Home = (props: Props) => {
