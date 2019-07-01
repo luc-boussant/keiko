@@ -1,4 +1,5 @@
 import React from 'react';
+import { CreateStandardAction } from 'typesafe-actions/dist/create-standard-action';
 
 import Pokemon from 'components/Pokemon';
 import { Navigation, StyledLink, StyledList, Title } from './Home.style';
@@ -13,6 +14,7 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemons: PokemonType[];
+  action: CreateStandardAction<'Pokemon/FETCH_POKEMONS_SUCCESS'>;
 }
 
 const Home = (props: Props) => {
