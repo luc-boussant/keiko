@@ -7,28 +7,26 @@ import Home, { Props } from './Home';
 
 import withDataFetching from 'HOC/withDataFetching';
 import { Dispatch } from 'redux';
-import { fetchPokemonsSuccess } from 'redux/Pokemon';
+import { fetchPokemonsSuccess, getPokemons, PokemonMap, PokemonType } from 'redux/Pokemon';
+import { normalize } from 'services/PokemonNormalizer';
 
-const mapStateToProps = (state: RootState) => {
-  const { pokemon } = state;
-  const pokemons = Object.values(pokemon);
-  return { pokemons };
-};
+const mapStateToProps = (state: RootState) => ({
+  pokemons: getPokemons(state),
+});
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: Props) => {
-  action: dispatch(fetchPokemonsSuccess(ownProps));
-};
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: Props) => ({
+  fetchPokemons: (data: PokemonMap) => dispatch(fetchPokemonsSuccess(data)),
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(
   withDataFetching<Props>(
-    'pokemons',
-    (props: Props) => {
-      makeGetRequest(`/pokemon`, { page: props.match.params.id });
-      props.action();
-    },
+    (props: Props) => makeGetRequest(`/pokemon`, { page: props.match.params.id }),
     (props: Props) => [props.match.params.id],
+    (props: Props, data: PokemonType[]) => {
+      props.fetchPokemons(normalize(data));
+    },
   )(Home),
 );

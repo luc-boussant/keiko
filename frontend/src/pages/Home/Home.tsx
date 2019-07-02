@@ -6,7 +6,8 @@ import { Navigation, StyledLink, StyledList, Title } from './Home.style';
 
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
-import { PokemonType } from 'redux/Pokemon';
+import { PokemonMap, PokemonType } from 'redux/Pokemon';
+import { PayloadCreator } from 'typesafe-actions/dist/types';
 
 interface RouteParams {
   id: string;
@@ -14,7 +15,7 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemons: PokemonType[];
-  action: CreateStandardAction<'Pokemon/FETCH_POKEMONS_SUCCESS'>;
+  fetchPokemons: (pokemons: PokemonMap) => void;
 }
 
 const Home = (props: Props) => {
