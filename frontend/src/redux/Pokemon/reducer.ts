@@ -1,4 +1,6 @@
 import { AnyAction } from 'redux';
+import { ActionType, getType } from 'typesafe-actions';
+import { fetchPokemonsSuccess } from './actions';
 
 export interface PokemonType {
   id: number;
@@ -7,12 +9,22 @@ export interface PokemonType {
   weight: number;
 }
 
-export type PokemonState = Readonly<Record<string, PokemonType>>;
+export type PokemonMap = Record<string, PokemonType>;
+
+export type PokemonState = Readonly<PokemonMap>;
+
+export type PokemonAction = ActionType<typeof fetchPokemonsSuccess>;
 
 const initialState: PokemonState = {};
 
 const reducer = (state: PokemonState = initialState, action: AnyAction) => {
-  return state;
+  const typedAction = action as PokemonAction;
+  switch (typedAction.type) {
+    case getType(fetchPokemonsSuccess):
+      return action.payload;
+    default:
+      return state;
+  }
 };
 
 export default reducer;
