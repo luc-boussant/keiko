@@ -5,11 +5,10 @@ import { ReactComponent as Loader } from '../../assets/loader.svg';
 import { StyledLoader } from './withDataFetching.style';
 
 const withDataFetching = <P extends object>(
-  dataName: string,
   fetchFunction: (props: P) => any,
   shouldCallEffect: (props: P) => any[],
+  successFunction: (props: P, data: any) => void,
 ) => (BaseComponent: React.ComponentType<P>) => (props: P) => {
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(false);
 
@@ -19,7 +18,7 @@ const withDataFetching = <P extends object>(
         try {
           const dataDict = await fetchFunction(props);
           const dataList = JSON.parse(dataDict.text);
-          setData(dataList);
+          successFunction(props, dataList);
           setLoading(false);
         } catch (error) {
           setApiError(true);
@@ -28,17 +27,12 @@ const withDataFetching = <P extends object>(
       fetchData();
 
       return function cleanup() {
-        setData(null);
         setLoading(true);
         setApiError(false);
       };
     },
     [...shouldCallEffect(props)],
   );
-
-  const customProps = {
-    [dataName]: data,
-  };
 
   return (
     <React.Fragment>
@@ -49,7 +43,7 @@ const withDataFetching = <P extends object>(
       ) : apiError ? (
         <FormattedMessage id="home.api-error-message" />
       ) : (
-        data && <BaseComponent {...props} {...customProps} />
+        <BaseComponent {...props} />
       )}
     </React.Fragment>
   );
