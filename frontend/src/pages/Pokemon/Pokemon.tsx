@@ -2,6 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import { FormattedMessage } from 'react-intl';
+import { PokemonMap } from 'redux/Pokemon';
 
 import { Body, Card, Image, ImageList, Title } from './Pokemon.style';
 
@@ -18,6 +19,7 @@ interface RouteParams {
 
 export interface Props extends RouteComponentProps<RouteParams> {
   pokemon: PokemonInterface;
+  fetchPokemon: (pokemons: PokemonMap) => void;
 }
 
 const POKEMON_IMAGE_BASE_URL =
