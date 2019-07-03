@@ -5,6 +5,11 @@ export const fetchPokemonsSuccess = createStandardAction('Pokemon/FETCH_POKEMONS
   PokemonState
 >();
 
+export const fetchPokemonSuccess = createStandardAction('Pokemon/FETCH_POKEMON_SUCCESS')<
+  PokemonState
+>();
+
 export default {
   fetchPokemonsSuccess,
+  fetchPokemonSuccess,
 };
