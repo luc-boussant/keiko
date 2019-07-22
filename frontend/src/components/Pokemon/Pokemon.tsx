@@ -14,8 +14,8 @@ interface Props {
 const POKEMON_IMAGE_BASE_URL =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
-const getFrontImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + id + '.png';
-const getBackImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + 'back/' + id + '.png';
+const getFrontImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}${id}.png`;
+const getBackImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/${id}.png`;
 
 const Pokemon: React.FunctionComponent<Props> = props => {
   const [showFrontImage, setShowFrontImage] = useState(true);

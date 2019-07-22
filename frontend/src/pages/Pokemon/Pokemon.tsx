@@ -25,10 +25,10 @@ export interface Props extends RouteComponentProps<RouteParams> {
 const POKEMON_IMAGE_BASE_URL =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
-const getFrontImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + id + '.png';
-const getFrontShinyImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + 'shiny/' + id + '.png';
-const getBackImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + 'back/' + id + '.png';
-const getBackShinyImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + 'back/shiny/' + id + '.png';
+const getFrontImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}${id}.png`;
+const getFrontShinyImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}shiny/${id}.png`;
+const getBackImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/${id}.png`;
+const getBackShinyImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/shiny/${id}.png`;
 
 const Home = (props: Props) => {
   const { pokemon } = props;
