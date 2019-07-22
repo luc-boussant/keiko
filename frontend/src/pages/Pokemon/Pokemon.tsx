@@ -1,8 +1,8 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 
-import { FormattedMessage } from 'react-intl';
-import { PokemonMap } from 'redux/Pokemon';
+import { PokemonType } from 'redux/Pokemon';
 
 import { Body, Card, Image, ImageList, Title } from './Pokemon.style';
 
@@ -18,8 +18,8 @@ interface RouteParams {
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
-  pokemon: PokemonInterface;
-  fetchPokemon: (pokemons: PokemonMap) => void;
+  pokemon: PokemonInterface | null;
+  fetchPokemon: (pokemons: PokemonType) => void;
 }
 
 const POKEMON_IMAGE_BASE_URL =
@@ -36,15 +36,17 @@ const Home = (props: Props) => {
   const { pokemon } = props;
 
   return (
-    <Card>
-      <Title>{pokemon.name}</Title>
-      <ImageList>
-        <Image src={getFrontImageUrl(pokemon.id)} />
-        <Image src={getBackImageUrl(pokemon.id)} />
-        <Image src={getFrontShinyImageUrl(pokemon.id)} />
-        <Image src={getBackShinyImageUrl(pokemon.id)} />
-      </ImageList>
-      <Body>
+    <React.Fragment>
+      {!!pokemon && (
+        <Card>
+          <Title>{pokemon.name}</Title>
+          <ImageList>
+            <Image src={getFrontImageUrl(pokemon.id)} />
+            <Image src={getBackImageUrl(pokemon.id)} />
+            <Image src={getFrontShinyImageUrl(pokemon.id)} />
+            <Image src={getBackShinyImageUrl(pokemon.id)} />
+          </ImageList>
+          <Body>
             <FormattedMessage
               id="pokemon.height"
               values={{ height: getHeightInCm(pokemon.height) }}
@@ -53,9 +55,11 @@ const Home = (props: Props) => {
               id="pokemon.weight"
               values={{ weight: getWeightinKg(pokemon.weight) }}
             />
-        <FormattedMessage id="pokemon.id" values={{ id: pokemon.id }} />
-      </Body>
-    </Card>
+            <FormattedMessage id="pokemon.id" values={{ id: pokemon.id }} />
+          </Body>
+        </Card>
+      )}
+    </React.Fragment>
   );
 };
 
