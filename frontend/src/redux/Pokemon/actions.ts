@@ -1,12 +1,12 @@
 import { createStandardAction } from 'typesafe-actions';
-import { PokemonState } from './reducer';
+import { PokemonMap, PokemonType } from './reducer';
 
 export const fetchPokemonsSuccess = createStandardAction('Pokemon/FETCH_POKEMONS_SUCCESS')<
-  PokemonState
+  Readonly<PokemonMap>
 >();
 
 export const fetchPokemonSuccess = createStandardAction('Pokemon/FETCH_POKEMON_SUCCESS')<
-  PokemonState
+  PokemonType
 >();
 
 export default {
