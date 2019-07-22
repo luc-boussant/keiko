@@ -10,7 +10,7 @@ import { PokemonMap, PokemonType } from 'redux/Pokemon';
 import { PayloadCreator } from 'typesafe-actions/dist/types';
 
 interface RouteParams {
-  id: string;
+  page: string;
 }
 
 export interface Props extends RouteComponentProps<RouteParams> {
@@ -18,9 +18,14 @@ export interface Props extends RouteComponentProps<RouteParams> {
   fetchPokemons: (pokemons: PokemonMap) => void;
 }
 
+const getPreviousPage = (page: string) => parseInt(page, 10) - 1;
+const getNextPage = (page: string) => parseInt(page, 10) + 1;
+const shouldShowPreviousPageLink = (page: string) => parseInt(page, 10) > 1;
+const shouldShowNextPageLink = (page: string) => parseInt(page, 10) < 6;
+
 const Home = (props: Props) => {
   const { pokemons } = props;
-  const { id } = props.match.params;
+  const { page } = props.match.params;
 
   return (
     <React.Fragment>
@@ -28,12 +33,11 @@ const Home = (props: Props) => {
         <FormattedMessage id="home.welcome-message" />
       </Title>
       <Navigation>
-        <StyledLink to={(parseInt(id, 10) - 1).toString()}>
-          {parseInt(id, 10) > 1 && '<'}
+        <StyledLink to={getPreviousPage(page).toString()}>
+          {shouldShowPreviousPageLink(page) && '<'}
         </StyledLink>
-
-        <StyledLink to={(parseInt(id, 10) + 1).toString()}>
-          {parseInt(id, 10) < 6 && '>'}
+        <StyledLink to={getNextPage(page).toString()}>
+          {shouldShowNextPageLink(page) && '>'}
         </StyledLink>
       </Navigation>
       <StyledList>

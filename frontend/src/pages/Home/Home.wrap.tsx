@@ -23,8 +23,8 @@ export default connect(
   mapDispatchToProps,
 )(
   withDataFetching<Props>(
-    (props: Props) => makeGetRequest(`/pokemon`, { page: props.match.params.id }),
-    (props: Props) => [props.match.params.id],
+    (props: Props) => makeGetRequest(`/pokemon`, { page: props.match.params.page }),
+    (props: Props) => [props.match.params.page],
     (props: Props, data: PokemonType[]) => {
       props.fetchPokemons(normalize(data));
     },
