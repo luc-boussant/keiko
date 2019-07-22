@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ReactComponent as TurnIcon } from '../../assets/turn-icon.svg';
 
@@ -19,7 +19,8 @@ const getBackImageUrl = (id: number) => POKEMON_IMAGE_BASE_URL + 'back/' + id + 
 
 const Pokemon: React.FunctionComponent<Props> = props => {
   const [showFrontImage, setShowFrontImage] = useState(true);
-  const flipImage = (event: any) => {
+  const flipImage = (event: MouseEvent) => {
+    // Stop the oncClick event to see the pokemon details
     event.preventDefault();
     event.stopPropagation();
     setShowFrontImage(!showFrontImage);
