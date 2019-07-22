@@ -1,5 +1,4 @@
 import React from 'react';
-import { CreateStandardAction } from 'typesafe-actions/dist/create-standard-action';
 
 import Pokemon from 'components/Pokemon';
 import { Navigation, StyledLink, StyledList, Title } from './Home.style';
@@ -7,7 +6,6 @@ import { Navigation, StyledLink, StyledList, Title } from './Home.style';
 import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 import { PokemonMap, PokemonType } from 'redux/Pokemon';
-import { PayloadCreator } from 'typesafe-actions/dist/types';
 
 interface RouteParams {
   page: string;
