@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import Style from './Pokemon.style';
 
@@ -15,7 +16,8 @@ class Pokemon extends PureComponent<IProps> {
     return (
       <Style.Intro>
         <div><img src={imageUrl} /></div>
-        <div>{id}: {name}</div>
+        <FormattedMessage id="pokemon.id" values={{ id }} />
+        <FormattedMessage id="pokemon.name" values={{ name }} />
       </Style.Intro>
     );
   }
