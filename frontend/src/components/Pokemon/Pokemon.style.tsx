@@ -28,3 +28,9 @@ export const Body = styled.div`
 export const Image = styled.img`
   height: 150px;
 `;
+
+export const StyledButton = styled.div`
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 215px;
+`;
