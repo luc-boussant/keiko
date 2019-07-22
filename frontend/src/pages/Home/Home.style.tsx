@@ -12,4 +12,10 @@ export const StyledList = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-`
+`;
+
+export const StyledLoader = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
