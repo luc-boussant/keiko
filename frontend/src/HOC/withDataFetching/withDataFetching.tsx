@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-
 import { FormattedMessage } from 'react-intl';
-import { ReactComponent as Loader } from '../../assets/loader.svg';
+
+import { ReactComponent as Loader } from 'assets/loader.svg';
 import { StyledLoader } from './withDataFetching.style';
 
 const withDataFetching = <P extends object>(
@@ -11,6 +11,11 @@ const withDataFetching = <P extends object>(
 ) => (BaseComponent: React.ComponentType<P>) => (props: P) => {
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(false);
+
+  const cleanup = () => {
+    setLoading(true);
+    setApiError(false);
+  };
 
   useEffect(
     () => {
@@ -26,10 +31,7 @@ const withDataFetching = <P extends object>(
       };
       fetchData();
 
-      return function cleanup() {
-        setLoading(true);
-        setApiError(false);
-      };
+      return cleanup;
     },
     [...shouldCallEffect(props)],
   );
