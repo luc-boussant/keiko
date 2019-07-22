@@ -1,28 +1,34 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-size: 15px;
   line-height: 20px;
-  border-style: double;
-  border-width: 5px;
-  margin: 10px;
+  margin: 20px;
 `;
 
 export const Title = styled.div`
   text-transform: capitalize;
   padding: 10px;
+  font-size: 30px;
 `;
 
 export const Body = styled.div`
   display: flex;
-  align-items: center;
   flex-direction: column;
   padding: 10px;
 `;
 
+export const ImageList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px;
+`;
+
 export const Image = styled.img`
-  height: 150px;
+  height: 100px;
 `;
 
 export const StyledButton = styled.div`
@@ -31,12 +37,9 @@ export const StyledButton = styled.div`
   margin-left: 215px;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLoader = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
-  height: 200px;
-  color: black;
-  text-decoration: none;
+  margin: 20px;
 `;
