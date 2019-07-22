@@ -11,17 +11,20 @@ export interface PokemonType {
 
 export type PokemonMap = Record<string, PokemonType>;
 
-export type PokemonState = Readonly<PokemonMap>;
+export interface PokemonState {
+  pokemon: Readonly<PokemonMap>;
+  selectedPokemon: PokemonType | null;
+}
 
 export type PokemonAction = ActionType<typeof fetchPokemonsSuccess | typeof fetchPokemonSuccess>;
 
-const initialState: PokemonState = {};
+const initialState: PokemonState = { pokemon: {}, selectedPokemon: null };
 
 const reducer = (state: PokemonState = initialState, action: AnyAction) => {
   const typedAction = action as PokemonAction;
   switch (typedAction.type) {
     case getType(fetchPokemonsSuccess):
-      return action.payload;
+      return { ...state, pokemon: action.payload };
     case getType(fetchPokemonSuccess):
       return { ...state, selectedPokemon: action.payload };
     default:
