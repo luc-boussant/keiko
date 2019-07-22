@@ -29,6 +29,8 @@ const getFrontImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}${id}.png`;
 const getFrontShinyImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}shiny/${id}.png`;
 const getBackImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/${id}.png`;
 const getBackShinyImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/shiny/${id}.png`;
+const getHeightInCm = (height: number) => height * 10;
+const getWeightinKg = (weight: number) => weight / 10;
 
 const Home = (props: Props) => {
   const { pokemon } = props;
@@ -43,8 +45,14 @@ const Home = (props: Props) => {
         <Image src={getBackShinyImageUrl(pokemon.id)} />
       </ImageList>
       <Body>
-        <FormattedMessage id="pokemon.height" values={{ height: pokemon.height * 10 }} />
-        <FormattedMessage id="pokemon.weight" values={{ weight: pokemon.weight / 10 }} />
+            <FormattedMessage
+              id="pokemon.height"
+              values={{ height: getHeightInCm(pokemon.height) }}
+            />
+            <FormattedMessage
+              id="pokemon.weight"
+              values={{ weight: getWeightinKg(pokemon.weight) }}
+            />
         <FormattedMessage id="pokemon.id" values={{ id: pokemon.id }} />
       </Body>
     </Card>

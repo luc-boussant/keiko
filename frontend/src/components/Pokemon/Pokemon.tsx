@@ -16,6 +16,8 @@ const POKEMON_IMAGE_BASE_URL =
 
 const getFrontImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}${id}.png`;
 const getBackImageUrl = (id: number) => `${POKEMON_IMAGE_BASE_URL}back/${id}.png`;
+const getHeightInCm = (height: number) => height * 10;
+const getWeightinKg = (weight: number) => weight / 10;
 
 const Pokemon: React.FunctionComponent<Props> = props => {
   const [showFrontImage, setShowFrontImage] = useState(true);
@@ -35,8 +37,8 @@ const Pokemon: React.FunctionComponent<Props> = props => {
         <Image src={showFrontImage ? getFrontImageUrl(props.id) : getBackImageUrl(props.id)} />
         <Body>
           <FormattedMessage id="pokemon.id" values={{ id: props.id }} />
-          <FormattedMessage id="pokemon.weight" values={{ weight: props.weight / 10 }} />
-          <FormattedMessage id="pokemon.height" values={{ height: props.height * 10 }} />
+          <FormattedMessage id="pokemon.weight" values={{ weight: getWeightinKg(props.weight) }} />
+          <FormattedMessage id="pokemon.height" values={{ height: getHeightInCm(props.height) }} />
         </Body>
       </StyledLink>
     </Card>
