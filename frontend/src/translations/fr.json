@@ -8,7 +8,7 @@
     "generate-module": "Pour ajouter de la logique métier, créer un dossier dans redux avec tes reducers/actions/sagas/selectors/constants/...",
     "click-me": "Click sur moi",
     "readme": "Lis le README.md pour découvrir les super commandes npm que nous avons ajouté",
-    "welcome-message": "Bienvenue sur ton futur pokédex !"
+    "welcome-message": "Pokédex"
   },
   "page": {
     "back": "Retour",
@@ -16,7 +16,8 @@
     "add-github-username": "Entrer un username github"
   },
   "pokemon": {
-    "id": "Identifiant: {id}",
-    "name": "Nom du pokémon: {name}"
+    "id": "Id: {id}",
+    "weight": "Poids: {weight} kg",
+    "height": "Taille: {height} cm"
   }
 }

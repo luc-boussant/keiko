@@ -1,14 +1,16 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 import Pokemon from 'components/Pokemon';
-import Style from './Home.style';
+import { FormattedMessage } from 'react-intl';
+import { StyledList, Title } from './Home.style';
 
 import { makeGetRequest } from 'services/networking/request';
 
 interface PokemonInterface {
   id: number;
   name: string;
+  weight: number;
+  height: number;
 }
 
 interface Props { }
@@ -32,12 +34,16 @@ class Home extends React.Component<Props, State> {
     const { pokemons } = this.state;
 
     return (
-      <Style.Intro>
-        <FormattedMessage id="home.welcome-message" />
-        {pokemons && pokemons.map(pokemon => (
-          <Pokemon name={pokemon.name} id={pokemon.id} key={pokemon.id} />
-        ))}
-      </Style.Intro>
+      <React.Fragment>
+        <Title>
+          <FormattedMessage id="home.welcome-message" />
+        </Title>
+        <StyledList>
+          {pokemons && pokemons.map(pokemon => (
+            <Pokemon name={pokemon.name} id={pokemon.id} weight={pokemon.weight} height={pokemon.height} key={pokemon.id} />
+          ))}
+        </StyledList>
+      </React.Fragment>
     );
   }
 }
