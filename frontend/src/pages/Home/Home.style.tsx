@@ -15,12 +15,6 @@ export const StyledList = styled.div`
   flex-wrap: wrap;
 `;
 
-export const StyledLoader = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 export const StyledLink = styled(Link)`
   font-size: 20px;
   color: black;

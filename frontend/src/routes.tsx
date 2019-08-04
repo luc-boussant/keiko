@@ -7,8 +7,8 @@ const Pokemon = lazy(() => import('./pages/Pokemon'));
 const routes = () => (
   <Suspense fallback={<div>Loading...</div>}>
     <Switch>
-      <Route exact path="/pokedex/:id" component={Home} />
-      <Route exact path="/pokemon/:id" component={Pokemon} />
+      <Route exact path="/pokedex/:page" component={Home} />
+      <Route exact path="/pokedex/pokemon/:id" component={Pokemon} />
       <Redirect to="/pokedex/1" />
     </Switch>
   </Suspense>

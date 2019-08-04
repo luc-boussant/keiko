@@ -1,89 +1,54 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Pokemon from 'components/Pokemon';
+import { Navigation, StyledLink, StyledList, Title } from './Home.style';
+
 import { FormattedMessage } from 'react-intl';
-import { ReactComponent as Loader } from '../../assets/loader.svg';
-import { Navigation, StyledLink, StyledList, StyledLoader, Title } from './Home.style';
-
 import { RouteComponentProps } from 'react-router';
-import { makeGetRequest } from 'services/networking/request';
+import { PokemonMap, PokemonType } from 'redux/Pokemon';
 
-interface PokemonInterface {
-  id: number;
-  name: string;
-  weight: number;
-  height: number;
+interface RouteParams {
+  page: string;
 }
 
-interface Props {
-  id: string;
+export interface Props extends RouteComponentProps<RouteParams> {
+  pokemons: PokemonType[];
+  fetchPokemons: (pokemons: PokemonMap) => void;
 }
 
-const Home: React.FunctionComponent<RouteComponentProps<Props>> = props => {
-  const [pokemons, setPokemons] = useState([] as PokemonInterface[]);
-  const [loading, setLoading] = useState(true);
-  const [apiError, setApiError] = useState(false);
-  const { id } = props.match.params;
+const getPreviousPage = (page: string) => parseInt(page, 10) - 1;
+const getNextPage = (page: string) => parseInt(page, 10) + 1;
+const shouldShowPreviousPageLink = (page: string) => parseInt(page, 10) > 1;
+const shouldShowNextPageLink = (page: string) => parseInt(page, 10) < 6;
 
-  useEffect(() => {
-    const getPokemonList = async () => {
-      try {
-        const pokemonDict = await makeGetRequest('/pokemon', { page: id });
-        const pokemonList = JSON.parse(pokemonDict.text);
-        setPokemons(pokemonList);
-        setLoading(false);
-      } catch (error) {
-        setApiError(true);
-      }
-    };
-    getPokemonList();
-
-    return function cleanup() {
-      setPokemons([]);
-      setLoading(true);
-      setApiError(false);
-    };
-  }, [id]);
+const Home = (props: Props) => {
+  const { pokemons } = props;
+  const { page } = props.match.params;
 
   return (
     <React.Fragment>
       <Title>
         <FormattedMessage id="home.welcome-message" />
       </Title>
-      {apiError ? (
-        <FormattedMessage id="home.api-error-message" />
-      ) : (
-        <React.Fragment>
-          {loading ? (
-            <StyledLoader>
-              <Loader />
-            </StyledLoader>
-          ) : (
-            <React.Fragment>
-              <Navigation>
-                <StyledLink to={(parseInt(id, 10) - 1).toString()}>
-                  {parseInt(id, 10) > 1 && '<'}
-                </StyledLink>
-
-                <StyledLink to={(parseInt(id, 10) + 1).toString()}>
-                  {parseInt(id, 10) < 6 && '>'}
-                </StyledLink>
-              </Navigation>
-              <StyledList>
-                {pokemons.map(pokemon => (
-                  <Pokemon
-                    name={pokemon.name}
-                    id={pokemon.id}
-                    weight={pokemon.weight}
-                    height={pokemon.height}
-                    key={pokemon.id}
-                  />
-                ))}
-              </StyledList>
-            </React.Fragment>
-          )}
-        </React.Fragment>
-      )}
+      <Navigation>
+        <StyledLink to={getPreviousPage(page).toString()}>
+          {shouldShowPreviousPageLink(page) && '<'}
+        </StyledLink>
+        <StyledLink to={getNextPage(page).toString()}>
+          {shouldShowNextPageLink(page) && '>'}
+        </StyledLink>
+      </Navigation>
+      <StyledList>
+        {pokemons.map(pokemon => (
+          <Pokemon
+            name={pokemon.name}
+            id={pokemon.id}
+            weight={pokemon.weight}
+            height={pokemon.height}
+            key={pokemon.id}
+          />
+        ))}
+      </StyledList>
     </React.Fragment>
   );
 };
