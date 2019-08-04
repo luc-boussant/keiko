@@ -24,10 +24,10 @@ const withDataFetching = <P extends object>(
           const dataDict = await fetchFunction(props);
           const dataList = JSON.parse(dataDict.text);
           successFunction(props, dataList);
-          setLoading(false);
         } catch (error) {
           setApiError(true);
         }
+        setLoading(false);
       };
       fetchData();
 
@@ -36,19 +36,17 @@ const withDataFetching = <P extends object>(
     [...shouldCallEffect(props)],
   );
 
-  return (
-    <React.Fragment>
-      {loading ? (
-        <StyledLoader>
-          <Loader />
-        </StyledLoader>
-      ) : apiError ? (
-        <FormattedMessage id="home.api-error-message" />
-      ) : (
-        <BaseComponent {...props} />
-      )}
-    </React.Fragment>
-  );
+  if (loading) {
+    return (
+      <StyledLoader>
+        <Loader />
+      </StyledLoader>
+    );
+  }
+  if (apiError) {
+    return <FormattedMessage id="home.api-error-message" />;
+  }
+  return <BaseComponent {...props} />;
 };
 
 export default withDataFetching;
